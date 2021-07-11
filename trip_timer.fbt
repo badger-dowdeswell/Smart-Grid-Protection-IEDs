@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE FBType SYSTEM "http://www.holobloc.com/xml/LibraryElement.dtd">
+<FBType Comment="Basic Function Block Type" Name="trip_timer">
+  <Identification Standard="61499-2"/>
+  <VersionInfo Author="gulzha" Date="11/29/2016" Organization="nxtControl GmbH" Remarks="Template" Version="0.0"/>
+  <InterfaceList>
+    <EventInputs>
+      <Event Comment="Initialization Request" Name="INIT" Type="Event">
+        <With Var="QI"/>
+      </Event>
+      <Event Comment="Normal Execution Request" Name="trip" Type="Event">
+        <With Var="QI"/>
+        <With Var="time"/>
+        <With Var="operate_in"/>
+      </Event>
+      <Event Comment="" Name="tripTimer_Q" Type="Event"/>
+      <Event Comment="" Name="stop_trip_timer" Type="Event">
+        <With Var="time"/>
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event Comment="Initialization Confirm" Name="INITO" Type="Event">
+        <With Var="QO"/>
+      </Event>
+      <Event Comment="Execution Confirmation" Name="trip_out" Type="Event">
+        <With Var="QO"/>
+        <With Var="operate"/>
+      </Event>
+      <Event Comment="" Name="trip_timer_start" Type="Event">
+        <With Var="time_out"/>
+      </Event>
+      <Event Comment="" Name="stop_timer" Type="Event"/>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration Comment="Input event qualifier" Name="QI" Type="BOOL"/>
+      <VarDeclaration Comment="" Name="time" Type="REAL"/>
+      <VarDeclaration Comment="" Name="operate_in" Type="BOOL"/>
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration Comment="Output event qualifier" Name="QO" Type="BOOL"/>
+      <VarDeclaration Comment="" Name="time_out" Type="REAL"/>
+      <VarDeclaration Comment="" Name="operate" Type="BOOL"/>
+    </OutputVars>
+  </InterfaceList>
+  <BasicFB>
+    <ECC>
+      <ECState Comment="Initial State" Name="START" x="2217.6470588235293" y="323.52941176470586"/>
+      <ECState Comment="Initialization" Name="INIT" x="3147.0588235294117" y="311.7647058823529">
+        <ECAction Algorithm="INIT" Output="INITO"/>
+      </ECState>
+      <ECState Comment="" Name="Sample" x="2611.7647058823527" y="1064.705882352941"/>
+      <ECState Comment="" Name="tmrTripPulse" x="458.8235294117647" y="941.1764705882352">
+        <ECAction Algorithm="Trip" Output="trip_out"/>
+      </ECState>
+      <ECState Comment="" Name="StartTimer" x="3952.941176470588" y="1529.4117647058822">
+        <ECAction Algorithm="trip_timer_start" Output="trip_timer_start"/>
+      </ECState>
+      <ECState Comment="" Name="STATE2" x="2752.941176470588" y="1958.8235294117646">
+        <ECAction Output="stop_timer"/>
+      </ECState>
+      <ECTransition Comment="" Condition="1" Destination="Sample" Source="INIT" x="2947.0588235294117" y="735.2941176470588"/>
+      <ECTransition Comment="" Condition="tripTimer_Q" Destination="tmrTripPulse" Source="Sample" x="1535.2941176470588" y="705.8823529411765"/>
+      <ECTransition Comment="" Condition="1" Destination="Sample" Source="StartTimer" x="3358.8235294117644" y="1058.8235294117646"/>
+      <ECTransition Comment="" Condition="1" Destination="Sample" Source="tmrTripPulse" x="1211.764705882353" y="1170.5882352941176"/>
+      <ECTransition Comment="" Condition="INIT" Destination="INIT" Source="START" x="2847.0588235294117" y="170.58823529411762"/>
+      <ECTransition Comment="" Condition="trip" Destination="StartTimer" Source="Sample" x="3194.1176470588234" y="1352.941176470588"/>
+      <ECTransition Comment="" Condition="stop_trip_timer" Destination="STATE2" Source="Sample" x="2764.705882352941" y="1500.0"/>
+      <ECTransition Comment="" Condition="1" Destination="Sample" Source="STATE2" x="2082.3529411764703" y="1605.8823529411764"/>
+    </ECC>
+    <Algorithm Comment="Initialization algorithm" Name="INIT">
+      <ST Text=";&#13;&#10;operate := FALSE;&#13;&#10;operate_in := FALSE;"/>
+    </Algorithm>
+    <Algorithm Comment="Normally executed algorithm" Name="REQ">
+      <ST Text=";"/>
+    </Algorithm>
+    <Algorithm Name="trip_timer_start">
+      <ST Text=";&#13;&#10;time_out := time;"/>
+    </Algorithm>
+    <Algorithm Name="reset_pulse_internal">
+      <ST Text=";&#13;&#10;operate := FALSE;&#13;&#10;time_out:=0;&#13;&#10;"/>
+    </Algorithm>
+    <Algorithm Name="trip_pulse_timer">
+      <ST Text=";"/>
+    </Algorithm>
+    <Algorithm Name="Trip">
+      <ST Text=";&#13;&#10;//operate := TRUE;&#13;&#10;operate := operate_in;"/>
+    </Algorithm>
+    <Algorithm Name="setVar">
+      <ST Text=";"/>
+    </Algorithm>
+  </BasicFB>
+</FBType>

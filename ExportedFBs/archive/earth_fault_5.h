@@ -1,0 +1,111 @@
+/*************************************************************************
+ *** FORTE Library Element
+ ***
+ *** This file was generated using the 4DIAC FORTE Export Filter V1.0.x!
+ ***
+ *** Name: earth_fault_5
+ *** Description: Basic Function Block Type
+ *** Version: 
+ ***     0.0: 3/23/2016/gulzha - nxtControl GmbH - Template
+ *************************************************************************/
+
+#ifndef _EARTH_FAULT_5_H_
+#define _EARTH_FAULT_5_H_
+
+#include <basicfb.h>
+#include <forte_bool.h>
+#include <forte_real.h>
+#include <forte_int.h>
+
+#include <iostream>
+#include <stdio.h>
+
+class FORTE_earth_fault_5: public CBasicFB{
+  DECLARE_FIRMWARE_FB(FORTE_earth_fault_5)
+
+private:
+  static const CStringDictionary::TStringId scm_anDataInputNames[];
+  static const CStringDictionary::TStringId scm_anDataInputTypeIds[];
+  CIEC_BOOL &QI() {
+    return *static_cast<CIEC_BOOL*>(getDI(0));
+  };
+
+  CIEC_INT &pickup_voltage() {
+    return *static_cast<CIEC_INT*>(getDI(1));
+  };
+
+  CIEC_REAL &voltage() {
+    return *static_cast<CIEC_REAL*>(getDI(2));
+  };
+
+  static const CStringDictionary::TStringId scm_anDataOutputNames[];
+  static const CStringDictionary::TStringId scm_anDataOutputTypeIds[];
+  CIEC_BOOL &QO() {
+    return *static_cast<CIEC_BOOL*>(getDO(0));
+  };
+
+  CIEC_BOOL &trip() {
+    return *static_cast<CIEC_BOOL*>(getDO(1));
+  };
+
+  static const TEventID scm_nEventINITID = 0;
+  static const TEventID scm_nEventREQID = 1;
+  static const TEventID scm_nEventRESETID = 2;
+  static const TForteInt16 scm_anEIWithIndexes[];
+  static const TDataIOID scm_anEIWith[];
+  static const CStringDictionary::TStringId scm_anEventInputNames[];
+
+  static const TEventID scm_nEventINITOID = 0;
+  static const TEventID scm_nEventCNFID = 1;
+  static const TEventID scm_nEventRESET_OUTID = 2;
+  static const TForteInt16 scm_anEOWithIndexes[];
+  static const TDataIOID scm_anEOWith[];
+  static const CStringDictionary::TStringId scm_anEventOutputNames[];
+
+  static const CStringDictionary::TStringId scm_anInternalsNames[];
+  static const CStringDictionary::TStringId scm_anInternalsTypeIds[];
+  CIEC_BOOL &fault() {
+    return *static_cast<CIEC_BOOL*>(getVarInternal(0));
+  };
+
+  CIEC_BOOL &time2() {
+    return *static_cast<CIEC_BOOL*>(getVarInternal(1));
+  };
+
+  static const SFBInterfaceSpec scm_stFBInterfaceSpec;
+
+
+  static const SInternalVarsInformation scm_stInternalVars;
+
+   FORTE_BASIC_FB_DATA_ARRAY(3, 3, 2, 2, 0);
+  void alg_INIT(void);
+  void alg_REQ(void);
+  void alg_RESET_OUT(void);
+  static const TForteInt16 scm_nStateSTART = 0;
+  static const TForteInt16 scm_nStateINIT = 1;
+  static const TForteInt16 scm_nStateSTATE1 = 2;
+  static const TForteInt16 scm_nStateSTATE3 = 3;
+  static const TForteInt16 scm_nStateSTATE5 = 4;
+  static const TForteInt16 scm_nStateSTATE4 = 5;
+
+  void enterStateSTART(void);
+  void enterStateINIT(void);
+  void enterStateSTATE1(void);
+  void enterStateSTATE3(void);
+  void enterStateSTATE5(void);
+  void enterStateSTATE4(void);
+
+  virtual void executeEvent(int pa_nEIID);
+
+public:
+  FORTE_earth_fault_5(CStringDictionary::TStringId pa_nInstanceNameId, CResource *pa_poSrcRes) : 
+       CBasicFB(pa_poSrcRes, &scm_stFBInterfaceSpec, pa_nInstanceNameId,
+           &scm_stInternalVars, m_anFBConnData, m_anFBVarsData){
+  };
+
+  virtual ~FORTE_earth_fault_5(){};
+
+};
+
+#endif //close the ifdef sequence from the beginning of the file
+

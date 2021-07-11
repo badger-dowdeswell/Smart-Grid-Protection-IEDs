@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE FBType SYSTEM "http://www.holobloc.com/xml/LibraryElement.dtd">
+<FBType Comment="Earth Fault Protection device" Name="IED64">
+  <Identification ApplicationDomain="Smart Grid Protection Systems" Description="Earth Fault protection Intelligent Electronic Device (IED) type 64." Function="Earth Fault Protection IED" Standard="61499-2" Type="IED"/>
+  <VersionInfo Author="badger" Date="24.02.2021" Organization="AUT" Remarks="Redesign of the earth fault IED from Gulnara's original design." Version="1.0"/>
+  <InterfaceList>
+    <EventInputs>
+      <Event Comment="Initialization Request" Name="INIT" Type="Event">
+        <With Var="pickup_voltage"/>
+      </Event>
+      <Event Comment="Reads the voltage from the substation" Name="REQ" Type="Event">
+        <With Var="voltage"/>
+      </Event>
+      <Event Comment="External signal to manually clear a tripped IED" Name="CLEAR" Type="Event"/>
+    </EventInputs>
+    <EventOutputs>
+      <Event Comment="Initialization Confirm" Name="INITO" Type="Event"/>
+      <Event Comment="Execution Confirmation" Name="CNF" Type="Event">
+        <With Var="trip"/>
+      </Event>
+      <Event Comment="Signals that the IED has been reset after the earth fault has been cleared" Name="RESET_OUT" Type="Event"/>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration Comment="The voltage from the earth fault that defines the trip point for the IED" InitialValue="0" Name="pickup_voltage" Type="REAL"/>
+      <VarDeclaration Comment="Earth leakage voltage from the substation interface" InitialValue="0" Name="voltage" Type="REAL"/>
+      <VarDeclaration Comment="Time in milliseconds after a fault before the IED is tripped." Name="trip_delay_time" Type="TIME"/>
+      <VarDeclaration Comment="Requirements Traceability ID" Name="TI" Type="STRING"/>
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration Comment="True if the IED has been tripped by an earth fault" InitialValue="false" Name="trip" Type="BOOL"/>
+    </OutputVars>
+  </InterfaceList>
+  <FBNetwork>
+    <FB Comment="" Name="E_DELAY" Type="E_DELAY" x="3388.235294117647" y="952.9411764705882"/>
+    <FB Comment="" Name="earth_fault" Type="earth_fault" x="1817.6470588235293" y="235.2941176470588"/>
+    <EventConnections>
+      <Connection Comment="" Destination="earth_fault.INIT" Source="INIT" dx1="611.7647058823529"/>
+      <Connection Comment="" Destination="earth_fault.REQ" Source="REQ" dx1="523.5294117647059"/>
+      <Connection Comment="" Destination="earth_fault.TIME_UP" Source="E_DELAY.EO" dx1="88.23529411764706" dx2="158.8235294117647" dy="529.4117647058823"/>
+      <Connection Comment="" Destination="earth_fault.CLEAR" Source="CLEAR" dx1="447.0588235294117"/>
+      <Connection Comment="" Destination="INITO" Source="earth_fault.INITO" dx1="982.3529411764705"/>
+      <Connection Comment="" Destination="CNF" Source="earth_fault.CNF" dx1="982.3529411764705"/>
+      <Connection Comment="" Destination="E_DELAY.START" Source="earth_fault.START_TIMER" dx1="482.35294117647055"/>
+      <Connection Comment="" Destination="E_DELAY.STOP" Source="earth_fault.RESET_OUT" dx1="388.235294117647"/>
+      <Connection Comment="" Destination="RESET_OUT" Source="earth_fault.RESET_OUT" dx1="982.3529411764705"/>
+    </EventConnections>
+    <DataConnections>
+      <Connection Comment="" Destination="E_DELAY.DT" Source="trip_delay_time" dx1="147.05882352941177"/>
+      <Connection Comment="" Destination="earth_fault.pickup_voltage" Source="pickup_voltage" dx1="352.94117647058823"/>
+      <Connection Comment="" Destination="earth_fault.voltage" Source="voltage" dx1="247.05882352941174"/>
+      <Connection Comment="" Destination="trip" Source="earth_fault.trip" dx1="982.3529411764705"/>
+    </DataConnections>
+  </FBNetwork>
+</FBType>

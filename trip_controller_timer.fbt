@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE FBType SYSTEM "http://www.holobloc.com/xml/LibraryElement.dtd">
+<FBType Comment="Composite Function Block Type" Name="trip_controller_timer">
+  <Identification Standard="61499-2"/>
+  <VersionInfo Author="gulzha" Date="11/29/2016" Organization="nxtControl GmbH" Remarks="template" Version="0.0"/>
+  <InterfaceList>
+    <EventInputs>
+      <Event Comment="Initialization Request" Name="INIT" Type="Event"/>
+      <Event Comment="Normal Execution Request" Name="trip_overcurrent" Type="Event">
+        <With Var="time"/>
+      </Event>
+      <Event Comment="Normal Execution Request" Name="trip_earth" Type="Event"/>
+      <Event Comment="" Name="stop_trip_timer" Type="Event">
+        <With Var="time"/>
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event Comment="Initialization Confirm" Name="INITO" Type="Event"/>
+      <Event Comment="Execution Confirmation" Name="Trip" Type="Event">
+        <With Var="Operate"/>
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration Comment="" Name="time" Type="REAL"/>
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration Comment="Current Output State" Name="Operate" Type="BOOL"/>
+    </OutputVars>
+  </InterfaceList>
+  <FBNetwork>
+    <FB Comment="" Name="FB3" Type="Timer_TON" x="3552.941176470588" y="1135.2941176470588"/>
+    <FB Comment="" Name="FB4" Type="Timer_TON" x="5629.411764705882" y="405.88235294117646">
+      <Parameter Name="time" Value="0.005"/>
+    </FB>
+    <FB Comment="" Name="FB5" Type="NOTRIP" x="7147.058823529411" y="647.0588235294117">
+      <Parameter Name="QI" Value="TRUE"/>
+    </FB>
+    <FB Comment="" Name="FB2" Type="trip_pulse_timer" x="1123.5294117647059" y="2164.705882352941">
+      <Parameter Name="QI" Value="TRUE"/>
+    </FB>
+    <FB Comment="" Name="FB1" Type="trip_timer" x="1288.235294117647" y="182.35294117647058">
+      <Parameter Name="QI" Value="TRUE"/>
+    </FB>
+    <FB Comment="" Name="FB6" Type="TRIP" x="4600.0" y="370.5882352941176">
+      <Parameter Name="QI" Value="TRUE"/>
+    </FB>
+    <FB Comment="" Name="FB8" Type="E_MERGE" x="3552.941176470588" y="305.88235294117646"/>
+    <FB Comment="" Name="FB7" Type="E_SR" x="5800.0" y="1370.5882352941176"/>
+    <EventConnections>
+      <Connection Comment="" Destination="FB1.INIT" Source="INIT" dx1="35.29411764705882"/>
+      <Connection Comment="" Destination="FB3.START" Source="FB1.trip_timer_start" dx1="347.05882352941177"/>
+      <Connection Comment="" Destination="FB3.NewTime" Source="FB1.trip_timer_start" dx1="264.70588235294116"/>
+      <Connection Comment="" Destination="FB3.STOP" Source="FB1.stop_timer" dx1="199.99999999999997"/>
+      <Connection Comment="" Destination="FB1.tripTimer_Q" Source="FB3.CNF" dx1="141.17647058823528" dx2="270.5882352941176" dy="752.9411764705882"/>
+      <Connection Comment="" Destination="FB5.REQ" Source="FB4.CNF" dx1="270.5882352941176"/>
+      <Connection Comment="" Destination="FB8.EI1" Source="FB1.trip_out" dx1="247.05882352941174"/>
+      <Connection Comment="" Destination="FB8.EI2" Source="FB2.trip_out" dx1="1217.6470588235293"/>
+      <Connection Comment="" Destination="FB6.REQ" Source="FB8.EO" dx1="164.70588235294116"/>
+      <Connection Comment="" Destination="FB4.START" Source="FB6.CNF" dx1="247.05882352941174"/>
+      <Connection Comment="" Destination="FB1.trip" Source="trip_overcurrent" dx1="35.29411764705882"/>
+      <Connection Comment="" Destination="FB2.trip" Source="trip_earth" dx1="35.29411764705882"/>
+      <Connection Comment="" Destination="FB2.INIT" Source="INIT" dx1="105.88235294117646"/>
+      <Connection Comment="" Destination="INITO" Source="FB2.INITO" dx1="5923.529411764705"/>
+      <Connection Comment="" Destination="FB7.S" Source="FB6.CNF" dx1="35.29411764705882"/>
+      <Connection Comment="" Destination="FB7.R" Source="FB5.CNF" dx1="111.76470588235293" dx2="123.52941176470587" dy="1205.8823529411764"/>
+      <Connection Comment="" Destination="Trip" Source="FB7.EO" dx1="2011.7647058823527"/>
+      <Connection Comment="" Destination="FB1.stop_trip_timer" Source="stop_trip_timer" dx1="258.8235294117647"/>
+    </EventConnections>
+    <DataConnections>
+      <Connection Comment="" Destination="FB3.time" Source="FB1.time_out" dx1="88.23529411764706"/>
+      <Connection Comment="" Destination="FB1.time" Source="time" dx1="158.8235294117647"/>
+      <Connection Comment="" Destination="Operate" Source="FB7.Q" dx1="2105.882352941176"/>
+    </DataConnections>
+  </FBNetwork>
+</FBType>

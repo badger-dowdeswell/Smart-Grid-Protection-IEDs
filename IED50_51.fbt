@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE FBType SYSTEM "http://www.holobloc.com/xml/LibraryElement.dtd">
+<FBType Comment="Overcurrent Protection IED type 50 and 51" Name="IED50_51">
+  <Identification Standard="61499-2"/>
+  <VersionInfo Author="badger" Date="2021-03-01" Version="1.0"/>
+  <InterfaceList>
+    <EventInputs>
+      <Event Comment="Initialization Request" Name="INIT" Type="Event">
+        <With Var="Ipickup_current"/>
+        <With Var="min_trip_time"/>
+        <With Var="time_dial_setting"/>
+        <With Var="curve_type"/>
+      </Event>
+      <Event Comment="Normal Execution Request" Name="REQ" Type="Event">
+        <With Var="Icurrent"/>
+      </Event>
+      <Event Comment="" Name="CLEAR" Type="Event"/>
+    </EventInputs>
+    <EventOutputs>
+      <Event Comment="Initialization Confirm" Name="INITO" Type="Event"/>
+      <Event Comment="Execution Confirmation" Name="CNF" Type="Event">
+        <With Var="trip"/>
+      </Event>
+      <Event Comment="" Name="RESET_OUT" Type="Event"/>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration Comment="in amps" Name="Ipickup_current" Type="REAL"/>
+      <VarDeclaration Comment="in amps" Name="Icurrent" Type="REAL"/>
+      <VarDeclaration Comment="one of the ANSI_Time_Curves enumerated types" Name="curve_type" Type="INT"/>
+      <VarDeclaration Comment="typically 0.5 to 15" Name="time_dial_setting" Type="REAL"/>
+      <VarDeclaration Comment="in milliseconds" Name="min_trip_time" Type="TIME"/>
+      <VarDeclaration Comment="Requirements Traceability ID" Name="TI" Type="STRING"/>
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration Comment="Output event qualifier" Name="trip" Type="BOOL"/>
+    </OutputVars>
+  </InterfaceList>
+  <FBNetwork>
+    <FB Comment="" Name="overcurrent" Type="overcurrent" x="1664.705882352941" y="364.70588235294116"/>
+    <FB Comment="" Name="E_DELAY" Type="E_DELAY" x="3688.235294117647" y="747.0588235294117"/>
+    <EventConnections>
+      <Connection Comment="" Destination="overcurrent.INIT" Source="INIT" dx1="670.5882352941176"/>
+      <Connection Comment="" Destination="overcurrent.REQ" Source="REQ" dx1="611.7647058823529"/>
+      <Connection Comment="" Destination="overcurrent.CLEAR" Source="CLEAR" dx1="552.9411764705882"/>
+      <Connection Comment="" Destination="E_DELAY.START" Source="overcurrent.START_TIMER" dx1="335.2941176470588"/>
+      <Connection Comment="" Destination="E_DELAY.STOP" Source="overcurrent.RESET_OUT" dx1="229.41176470588235"/>
+      <Connection Comment="" Destination="INITO" Source="overcurrent.INITO" dx1="1017.6470588235294"/>
+      <Connection Comment="" Destination="CNF" Source="overcurrent.CNF" dx1="1017.6470588235294"/>
+      <Connection Comment="" Destination="RESET_OUT" Source="overcurrent.RESET_OUT" dx1="1017.6470588235294"/>
+      <Connection Comment="" Destination="overcurrent.TIME_UP" Source="E_DELAY.EO" dx1="188.23529411764704" dx2="217.6470588235294" dy="911.7647058823529"/>
+    </EventConnections>
+    <DataConnections>
+      <Connection Comment="" Destination="overcurrent.Ipickup_current" Source="Ipickup_current" dx1="482.35294117647055"/>
+      <Connection Comment="" Destination="overcurrent.current" Source="Icurrent" dx1="405.88235294117646"/>
+      <Connection Comment="" Destination="overcurrent.curve_type" Source="curve_type" dx1="335.2941176470588"/>
+      <Connection Comment="" Destination="overcurrent.time_dial_setting" Source="time_dial_setting" dx1="252.9411764705882"/>
+      <Connection Comment="" Destination="overcurrent.min_trip_time" Source="min_trip_time" dx1="176.47058823529412"/>
+      <Connection Comment="" Destination="E_DELAY.DT" Source="overcurrent.trip_time" dx1="335.2941176470588"/>
+      <Connection Comment="" Destination="trip" Source="overcurrent.trip" dx1="1017.6470588235294"/>
+    </DataConnections>
+  </FBNetwork>
+</FBType>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE FBType SYSTEM "http://www.holobloc.com/xml/LibraryElement.dtd">
+<FBType Comment="Basic Function Block Type" Name="earth_fault">
+  <Identification Standard="61499-2"/>
+  <VersionInfo Author="gulzha" Date="3/23/2016" Organization="nxtControl GmbH" Remarks="Template" Version="0.0"/>
+  <VersionInfo Author="Badger" Date="22/02/2021" Organization="4diac" Remarks="Refactored and migrated to 4diac" Version="1.0"/>
+  <InterfaceList>
+    <EventInputs>
+      <Event Comment="Initialization Request" Name="INIT" Type="Event">
+        <With Var="pickup_voltage"/>
+      </Event>
+      <Event Comment="Normal Execution Request" Name="REQ" Type="Event">
+        <With Var="pickup_voltage"/>
+        <With Var="voltage"/>
+      </Event>
+      <Event Comment="" Name="RESET" Type="Event"/>
+      <Event Comment="" Name="TIME_UP" Type="Event"/>
+      <Event Comment="" Name="CLEAR" Type="Event"/>
+    </EventInputs>
+    <EventOutputs>
+      <Event Comment="Initialisation confirmation" Name="INITO" Type="Event"/>
+      <Event Comment="Execution Confirmation" Name="CNF" Type="Event">
+        <With Var="trip"/>
+      </Event>
+      <Event Comment="" Name="START_TIMER" Type="Event"/>
+      <Event Comment="" Name="RESET_OUT" Type="Event"/>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration Comment="" Name="pickup_voltage" Type="REAL"/>
+      <VarDeclaration Comment="" Name="voltage" Type="REAL"/>
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration Comment="" Name="trip" Type="BOOL"/>
+    </OutputVars>
+  </InterfaceList>
+  <BasicFB>
+    <InternalVars>
+      <VarDeclaration Comment="Ensures that the timer is started only once during a fault condition." Name="fault" Type="BOOL"/>
+    </InternalVars>
+    <ECC>
+      <ECState Comment="Initial State" Name="NORMAL" x="823.5294117647059" y="535.2941176470588"/>
+      <ECState Comment="Initialization" Name="INIT" x="864.7058823529411" y="147.05882352941177">
+        <ECAction Algorithm="INIT" Output="INITO"/>
+      </ECState>
+      <ECState Comment="" Name="FAULT" x="2576.470588235294" y="1576.470588235294"/>
+      <ECState Comment="" Name="TRIP" x="2417.6470588235293" y="2470.5882352941176">
+        <ECAction Algorithm="TRIP" Output="CNF"/>
+      </ECState>
+      <ECState Comment="" Name="RESET" x="770.5882352941176" y="1305.8823529411764">
+        <ECAction Algorithm="RESET" Output="RESET_OUT"/>
+      </ECState>
+      <ECState Comment="" Name="START_TIMER" x="3329.411764705882" y="911.7647058823529">
+        <ECAction Algorithm="START_TIMER" Output="START_TIMER"/>
+      </ECState>
+      <ECTransition Comment="" Condition="INIT" Destination="INIT" Source="NORMAL" x="670.5882352941176" y="394.1176470588235"/>
+      <ECTransition Comment="" Condition="1" Destination="NORMAL" Source="INIT" x="1188.235294117647" y="399.99999999999994"/>
+      <ECTransition Comment="" Condition="[REQ AND (voltage &gt; pickup_voltage)]" Destination="FAULT" Source="NORMAL" x="2317.6470588235293" y="794.1176470588234"/>
+      <ECTransition Comment="" Condition="TIME_UP" Destination="TRIP" Source="FAULT" x="3570.5882352941176" y="2052.9411764705883"/>
+      <ECTransition Comment="Voltage has dropped back to a safe level so reset" Condition="[(REQ() AND (voltage() &lt; pickup_voltage() )]" Destination="RESET" Source="FAULT" x="2223.529411764706" y="2035.2941176470588"/>
+      <ECTransition Comment="Clears the trip condition after the IED has been commanded to reset." Condition="[RESET]" Destination="RESET" Source="TRIP" x="1270.5882352941176" y="2364.705882352941"/>
+      <ECTransition Comment="If the timer has not already been started, then this is a new fault. Start the timer." Condition="[NOT fault()]" Destination="START_TIMER" Source="FAULT" x="2994.1176470588234" y="1211.764705882353"/>
+      <ECTransition Comment="" Condition="1" Destination="FAULT" Source="START_TIMER" x="3282.3529411764703" y="1435.2941176470588"/>
+      <ECTransition Comment="" Condition="CLEAR" Destination="NORMAL" Source="RESET" x="917.6470588235294" y="1047.0588235294117"/>
+    </ECC>
+    <Algorithm Comment="Initialization algorithm" Name="INIT">
+      <Other Language="AnyText" Text="&#9;trip() = false;&#13;&#10;&#9;fault() = false;"/>
+    </Algorithm>
+    <Algorithm Comment="Normally executed algorithm" Name="REQ">
+      <Other Language="AnyText" Text="&#9;trip() = true;&#13;&#10;"/>
+    </Algorithm>
+    <Algorithm Name="RESET">
+      <Other Language="AnyText" Text=";&#13;&#10;&#13;&#10;trip := FALSE;&#13;&#10;fault := FALSE;&#13;&#10;&#13;&#10;"/>
+    </Algorithm>
+    <Algorithm Comment="Start timer after fault is detected" Name="START_TIMER">
+      <Other Language="AnyText" Text="&#9;fault() = true;"/>
+    </Algorithm>
+    <Algorithm Comment="Trip after timeout." Name="TRIP">
+      <Other Language="AnyText" Text=""/>
+    </Algorithm>
+  </BasicFB>
+</FBType>

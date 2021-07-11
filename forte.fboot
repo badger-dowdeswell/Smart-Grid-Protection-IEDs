@@ -1,0 +1,115 @@
+;<Request ID="1" Action="CREATE"><FB Name="EMB_RES" Type="EMB_RES" /></Request>
+EMB_RES;<Request ID="2" Action="CREATE"><FB Name="trip_multiplexer" Type="trip_multiplexer" /></Request>
+EMB_RES;<Request ID="3" Action="CREATE"><FB Name="IED50_51" Type="IED50_51" /></Request>
+EMB_RES;<Request ID="4" Action="WRITE"><Connection Source="4.5" Destination="IED50_51.Ipickup_current" /></Request>
+EMB_RES;<Request ID="5" Action="WRITE"><Connection Source="2" Destination="IED50_51.curve_type" /></Request>
+EMB_RES;<Request ID="6" Action="WRITE"><Connection Source="0.5" Destination="IED50_51.time_dial_setting" /></Request>
+EMB_RES;<Request ID="7" Action="WRITE"><Connection Source="5000" Destination="IED50_51.min_trip_time" /></Request>
+EMB_RES;<Request ID="8" Action="CREATE"><FB Name="IED64" Type="IED64" /></Request>
+EMB_RES;<Request ID="9" Action="WRITE"><Connection Source="20" Destination="IED64.pickup_voltage" /></Request>
+EMB_RES;<Request ID="10" Action="WRITE"><Connection Source="0" Destination="IED64.voltage" /></Request>
+EMB_RES;<Request ID="11" Action="WRITE"><Connection Source="600" Destination="IED64.trip_delay_time" /></Request>
+EMB_RES;<Request ID="12" Action="CREATE"><FB Name="E_CYCLE" Type="E_CYCLE" /></Request>
+EMB_RES;<Request ID="13" Action="CREATE"><FB Name="differential" Type="differential" /></Request>
+EMB_RES;<Request ID="14" Action="WRITE"><Connection Source="5000" Destination="differential.poll_time" /></Request>
+EMB_RES;<Request ID="15" Action="WRITE"><Connection Source="10" Destination="differential.differential_percentage" /></Request>
+EMB_RES;<Request ID="16" Action="WRITE"><Connection Source="4.5" Destination="differential.Icurrent_1" /></Request>
+EMB_RES;<Request ID="17" Action="WRITE"><Connection Source="5.0" Destination="differential.Icurrent_2" /></Request>
+EMB_RES;<Request ID="18" Action="CREATE"><FB Name="DP_1" Type="DP" /></Request>
+EMB_RES;<Request ID="19" Action="WRITE"><Connection Source="0" Destination="DP_1.DATA_TYPE" /></Request>
+EMB_RES;<Request ID="20" Action="WRITE"><Connection Source="T#50ms" Destination="DP_1.POLL_TIME" /></Request>
+EMB_RES;<Request ID="21" Action="WRITE"><Connection Source="127.0.0.3" Destination="DP_1.ADDRESS" /></Request>
+EMB_RES;<Request ID="22" Action="WRITE"><Connection Source="62503" Destination="DP_1.PORT" /></Request>
+EMB_RES;<Request ID="23" Action="WRITE"><Connection Source="1" Destination="DP_1.INST_ID" /></Request>
+EMB_RES;<Request ID="24" Action="CREATE"><FB Name="DP_2" Type="DP" /></Request>
+EMB_RES;<Request ID="25" Action="WRITE"><Connection Source="0" Destination="DP_2.DATA_TYPE" /></Request>
+EMB_RES;<Request ID="26" Action="WRITE"><Connection Source="T#50ms" Destination="DP_2.POLL_TIME" /></Request>
+EMB_RES;<Request ID="27" Action="WRITE"><Connection Source="127.0.0.3" Destination="DP_2.ADDRESS" /></Request>
+EMB_RES;<Request ID="28" Action="WRITE"><Connection Source="62503" Destination="DP_2.PORT" /></Request>
+EMB_RES;<Request ID="29" Action="WRITE"><Connection Source="2" Destination="DP_2.INST_ID" /></Request>
+EMB_RES;<Request ID="30" Action="CREATE"><FB Name="DP_3" Type="DP" /></Request>
+EMB_RES;<Request ID="31" Action="WRITE"><Connection Source="3" Destination="DP_3.DATA_TYPE" /></Request>
+EMB_RES;<Request ID="32" Action="WRITE"><Connection Source="T#50ms" Destination="DP_3.POLL_TIME" /></Request>
+EMB_RES;<Request ID="33" Action="WRITE"><Connection Source="127.0.0.3" Destination="DP_3.ADDRESS" /></Request>
+EMB_RES;<Request ID="34" Action="WRITE"><Connection Source="62503" Destination="DP_3.PORT" /></Request>
+EMB_RES;<Request ID="35" Action="WRITE"><Connection Source="3" Destination="DP_3.INST_ID" /></Request>
+EMB_RES;<Request ID="36" Action="CREATE"><FB Name="DP_4" Type="DP" /></Request>
+EMB_RES;<Request ID="37" Action="WRITE"><Connection Source="0" Destination="DP_4.DATA_TYPE" /></Request>
+EMB_RES;<Request ID="38" Action="WRITE"><Connection Source="T#50ms" Destination="DP_4.POLL_TIME" /></Request>
+EMB_RES;<Request ID="39" Action="WRITE"><Connection Source="127.0.0.3" Destination="DP_4.ADDRESS" /></Request>
+EMB_RES;<Request ID="40" Action="WRITE"><Connection Source="62503" Destination="DP_4.PORT" /></Request>
+EMB_RES;<Request ID="41" Action="WRITE"><Connection Source="4" Destination="DP_4.INST_ID" /></Request>
+EMB_RES;<Request ID="42" Action="CREATE"><FB Name="DP_5" Type="DP" /></Request>
+EMB_RES;<Request ID="43" Action="WRITE"><Connection Source="0" Destination="DP_5.DATA_TYPE" /></Request>
+EMB_RES;<Request ID="44" Action="WRITE"><Connection Source="T#50ms" Destination="DP_5.POLL_TIME" /></Request>
+EMB_RES;<Request ID="45" Action="WRITE"><Connection Source="127.0.0.3" Destination="DP_5.ADDRESS" /></Request>
+EMB_RES;<Request ID="46" Action="WRITE"><Connection Source="62503" Destination="DP_5.PORT" /></Request>
+EMB_RES;<Request ID="47" Action="WRITE"><Connection Source="5" Destination="DP_5.INST_ID" /></Request>
+EMB_RES;<Request ID="48" Action="CREATE"><FB Name="DP_6" Type="DP" /></Request>
+EMB_RES;<Request ID="49" Action="WRITE"><Connection Source="0" Destination="DP_6.DATA_TYPE" /></Request>
+EMB_RES;<Request ID="50" Action="WRITE"><Connection Source="T#50ms" Destination="DP_6.POLL_TIME" /></Request>
+EMB_RES;<Request ID="51" Action="WRITE"><Connection Source="127.0.0.3" Destination="DP_6.ADDRESS" /></Request>
+EMB_RES;<Request ID="52" Action="WRITE"><Connection Source="62503" Destination="DP_6.PORT" /></Request>
+EMB_RES;<Request ID="53" Action="WRITE"><Connection Source="6" Destination="DP_6.INST_ID" /></Request>
+EMB_RES;<Request ID="54" Action="CREATE"><FB Name="DP_7" Type="DP" /></Request>
+EMB_RES;<Request ID="55" Action="WRITE"><Connection Source="3" Destination="DP_7.DATA_TYPE" /></Request>
+EMB_RES;<Request ID="56" Action="WRITE"><Connection Source="T#50ms" Destination="DP_7.POLL_TIME" /></Request>
+EMB_RES;<Request ID="57" Action="WRITE"><Connection Source="127.0.0.3" Destination="DP_7.ADDRESS" /></Request>
+EMB_RES;<Request ID="58" Action="WRITE"><Connection Source="62503" Destination="DP_7.PORT" /></Request>
+EMB_RES;<Request ID="59" Action="WRITE"><Connection Source="7" Destination="DP_7.INST_ID" /></Request>
+EMB_RES;<Request ID="60" Action="CREATE"><FB Name="DP_8" Type="DP" /></Request>
+EMB_RES;<Request ID="61" Action="WRITE"><Connection Source="0" Destination="DP_8.DATA_TYPE" /></Request>
+EMB_RES;<Request ID="62" Action="WRITE"><Connection Source="T#50ms" Destination="DP_8.POLL_TIME" /></Request>
+EMB_RES;<Request ID="63" Action="WRITE"><Connection Source="127.0.0.3" Destination="DP_8.ADDRESS" /></Request>
+EMB_RES;<Request ID="64" Action="WRITE"><Connection Source="62503" Destination="DP_8.PORT" /></Request>
+EMB_RES;<Request ID="65" Action="WRITE"><Connection Source="8" Destination="DP_8.INST_ID" /></Request>
+EMB_RES;<Request ID="66" Action="CREATE"><FB Name="DP_9" Type="DP" /></Request>
+EMB_RES;<Request ID="67" Action="WRITE"><Connection Source="0" Destination="DP_9.DATA_TYPE" /></Request>
+EMB_RES;<Request ID="68" Action="WRITE"><Connection Source="T#50ms" Destination="DP_9.POLL_TIME" /></Request>
+EMB_RES;<Request ID="69" Action="WRITE"><Connection Source="127.0.0.3" Destination="DP_9.ADDRESS" /></Request>
+EMB_RES;<Request ID="70" Action="WRITE"><Connection Source="62503" Destination="DP_9.PORT" /></Request>
+EMB_RES;<Request ID="71" Action="WRITE"><Connection Source="9" Destination="DP_9.INST_ID" /></Request>
+EMB_RES;<Request ID="72" Action="CREATE"><Connection Source="E_CYCLE.EO" Destination="differential.POLL"/></Request>
+EMB_RES;<Request ID="73" Action="CREATE"><Connection Source="differential.START_POLL" Destination="E_CYCLE.START"/></Request>
+EMB_RES;<Request ID="74" Action="CREATE"><Connection Source="differential.STOP_POLL" Destination="E_CYCLE.STOP"/></Request>
+EMB_RES;<Request ID="75" Action="CREATE"><Connection Source="differential.poll_time_set" Destination="E_CYCLE.DT"/></Request>
+EMB_RES;<Request ID="76" Action="CREATE"><Connection Source="START.COLD" Destination="trip_multiplexer.INIT"/></Request>
+EMB_RES;<Request ID="77" Action="CREATE"><Connection Source="START.WARM" Destination="trip_multiplexer.INIT"/></Request>
+EMB_RES;<Request ID="78" Action="CREATE"><Connection Source="START.COLD" Destination="IED64.INIT"/></Request>
+EMB_RES;<Request ID="79" Action="CREATE"><Connection Source="START.WARM" Destination="IED64.INIT"/></Request>
+EMB_RES;<Request ID="80" Action="CREATE"><Connection Source="START.COLD" Destination="IED50_51.INIT"/></Request>
+EMB_RES;<Request ID="81" Action="CREATE"><Connection Source="START.WARM" Destination="IED50_51.INIT"/></Request>
+EMB_RES;<Request ID="82" Action="CREATE"><Connection Source="trip_multiplexer.CB_TRIP" Destination="DP_1.DATA_IN"/></Request>
+EMB_RES;<Request ID="83" Action="CREATE"><Connection Source="START.COLD" Destination="DP_1.START"/></Request>
+EMB_RES;<Request ID="84" Action="CREATE"><Connection Source="START.WARM" Destination="DP_1.START"/></Request>
+EMB_RES;<Request ID="85" Action="CREATE"><Connection Source="trip_multiplexer.CB_RESET" Destination="DP_2.DATA_IN"/></Request>
+EMB_RES;<Request ID="86" Action="CREATE"><Connection Source="START.COLD" Destination="DP_2.START"/></Request>
+EMB_RES;<Request ID="87" Action="CREATE"><Connection Source="START.WARM" Destination="DP_2.START"/></Request>
+EMB_RES;<Request ID="88" Action="CREATE"><Connection Source="DP_3.DATA_OUT" Destination="IED50_51.REQ"/></Request>
+EMB_RES;<Request ID="89" Action="CREATE"><Connection Source="DP_3.DATA_OUT_REAL" Destination="IED50_51.Icurrent"/></Request>
+EMB_RES;<Request ID="90" Action="CREATE"><Connection Source="START.COLD" Destination="DP_3.START"/></Request>
+EMB_RES;<Request ID="91" Action="CREATE"><Connection Source="START.WARM" Destination="DP_3.START"/></Request>
+EMB_RES;<Request ID="92" Action="CREATE"><Connection Source="IED50_51.CNF" Destination="DP_4.DATA_IN"/></Request>
+EMB_RES;<Request ID="93" Action="CREATE"><Connection Source="DP_4.DATA_OUT" Destination="trip_multiplexer.TRIP_2"/></Request>
+EMB_RES;<Request ID="94" Action="CREATE"><Connection Source="START.COLD" Destination="DP_4.START"/></Request>
+EMB_RES;<Request ID="95" Action="CREATE"><Connection Source="START.WARM" Destination="DP_4.START"/></Request>
+EMB_RES;<Request ID="96" Action="CREATE"><Connection Source="IED50_51.RESET_OUT" Destination="DP_5.DATA_IN"/></Request>
+EMB_RES;<Request ID="97" Action="CREATE"><Connection Source="DP_5.DATA_OUT" Destination="trip_multiplexer.RESET"/></Request>
+EMB_RES;<Request ID="98" Action="CREATE"><Connection Source="START.COLD" Destination="DP_5.START"/></Request>
+EMB_RES;<Request ID="99" Action="CREATE"><Connection Source="START.WARM" Destination="DP_5.START"/></Request>
+EMB_RES;<Request ID="100" Action="CREATE"><Connection Source="DP_6.DATA_OUT" Destination="IED50_51.CLEAR"/></Request>
+EMB_RES;<Request ID="101" Action="CREATE"><Connection Source="START.COLD" Destination="DP_6.START"/></Request>
+EMB_RES;<Request ID="102" Action="CREATE"><Connection Source="START.WARM" Destination="DP_6.START"/></Request>
+EMB_RES;<Request ID="103" Action="CREATE"><Connection Source="DP_7.DATA_OUT" Destination="IED64.REQ"/></Request>
+EMB_RES;<Request ID="104" Action="CREATE"><Connection Source="DP_7.DATA_OUT_REAL" Destination="IED64.voltage"/></Request>
+EMB_RES;<Request ID="105" Action="CREATE"><Connection Source="START.COLD" Destination="DP_7.START"/></Request>
+EMB_RES;<Request ID="106" Action="CREATE"><Connection Source="START.WARM" Destination="DP_7.START"/></Request>
+EMB_RES;<Request ID="107" Action="CREATE"><Connection Source="IED64.CNF" Destination="DP_8.DATA_IN"/></Request>
+EMB_RES;<Request ID="108" Action="CREATE"><Connection Source="DP_8.DATA_OUT" Destination="trip_multiplexer.TRIP_1"/></Request>
+EMB_RES;<Request ID="109" Action="CREATE"><Connection Source="START.COLD" Destination="DP_8.START"/></Request>
+EMB_RES;<Request ID="110" Action="CREATE"><Connection Source="START.WARM" Destination="DP_8.START"/></Request>
+EMB_RES;<Request ID="111" Action="CREATE"><Connection Source="IED64.RESET_OUT" Destination="DP_9.DATA_IN"/></Request>
+EMB_RES;<Request ID="112" Action="CREATE"><Connection Source="DP_9.DATA_OUT" Destination="trip_multiplexer.RESET"/></Request>
+EMB_RES;<Request ID="113" Action="CREATE"><Connection Source="START.COLD" Destination="DP_9.START"/></Request>
+EMB_RES;<Request ID="114" Action="CREATE"><Connection Source="START.WARM" Destination="DP_9.START"/></Request>
+EMB_RES;<Request ID="115" Action="START"/>

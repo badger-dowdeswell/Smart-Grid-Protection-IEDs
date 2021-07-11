@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE FBDiag SYSTEM "DiagnosticElement.dtd">
+<FBDiag Name="VOLTAGE_A_TO_D" Comment="Diagnostic information for the VOLTAGE_A_TO_D function block ver 1">
+	<DPS>
+		<DP Event="REQ" Port="voltage"/>
+	</DPS>
+	<Diag>
+		<DiagTest>
+		   <Name>gimbal</Name>
+			<Code>boolean status = true;</Code>
+			<Code>double voltage = 0;</Code>
+		</DiagTest>
+	</Diag>
+</FBDiag>
+
+

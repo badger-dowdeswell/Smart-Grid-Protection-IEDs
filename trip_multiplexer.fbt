@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE FBType SYSTEM "http://www.holobloc.com/xml/LibraryElement.dtd">
+<FBType Comment="Template for a simple Basic Function Block Type" Name="trip_multiplexer">
+  <Identification Standard="61499-2"/>
+  <VersionInfo Author="badger" Date="2021-02-26" Version="1.0"/>
+  <InterfaceList>
+    <EventInputs>
+      <Event Comment="Initialization Request" Name="INIT" Type="Event"/>
+      <Event Comment="Trip request 1" Name="TRIP_1" Type="Event"/>
+      <Event Comment="Trip request 2" Name="TRIP_2" Type="Event"/>
+      <Event Comment="Trip request 3" Name="TRIP_3" Type="Event"/>
+      <Event Comment="Trip request 4" Name="TRIP_4" Type="Event"/>
+      <Event Comment="Trip request 5" Name="TRIP_5" Type="Event"/>
+      <Event Comment="Reset the circuit breaker" Name="RESET" Type="Event"/>
+    </EventInputs>
+    <EventOutputs>
+      <Event Comment="Initialization Confirm" Name="INITO" Type="Event"/>
+      <Event Comment="Circuit Breaker output" Name="CB_TRIP" Type="Event"/>
+      <Event Comment="Reset the circuit breaker" Name="CB_RESET" Type="Event"/>
+    </EventOutputs>
+  </InterfaceList>
+  <BasicFB>
+    <ECC>
+      <ECState Comment="Initial State" Name="START" x="494.1176470588235" y="1188.235294117647"/>
+      <ECState Comment="Initialization" Name="INIT" x="1229.4117647058822" y="664.7058823529411">
+        <ECAction Algorithm="INITIALISE" Output="INITO"/>
+      </ECState>
+      <ECState Comment="Normal execution" Name="TRIP" x="3241.176470588235" y="1194.1176470588234">
+        <ECAction Algorithm="TRIP" Output="CB_TRIP"/>
+      </ECState>
+      <ECState Comment="" Name="NORMAL" x="1170.5882352941176" y="1176.4705882352941"/>
+      <ECState Comment="" Name="RESET" x="2088.235294117647" y="1605.8823529411764">
+        <ECAction Algorithm="RESET" Output="CB_RESET"/>
+      </ECState>
+      <ECTransition Comment="" Condition="INIT" Destination="INIT" Source="START" x="835.2941176470588" y="917.6470588235294"/>
+      <ECTransition Comment="" Condition="1" Destination="NORMAL" Source="INIT" x="1370.5882352941176" y="1052.941176470588"/>
+      <ECTransition Comment="Trigger if any of the trip request events are received." Condition="TRIP_1[|| TRIP_2  ||  TRIP_3 || TRIP_4 || TRIP_5]" Destination="TRIP" Source="NORMAL" x="2611.7647058823527" y="999.9999999999999"/>
+      <ECTransition Comment="" Condition="1" Destination="NORMAL" Source="RESET" x="1699.9999999999998" y="1541.1764705882351"/>
+      <ECTransition Comment="Reset the circuit breaker" Condition="RESET" Destination="RESET" Source="TRIP" x="2929.411764705882" y="1435.2941176470588"/>
+    </ECC>
+    <Algorithm Comment="Initialization algorithm" Name="INITIALISE">
+      <Other Language="AnyText" Text=""/>
+    </Algorithm>
+    <Algorithm Comment="Trip the circuit breaker" Name="TRIP">
+      <Other Language="AnyText" Text=""/>
+    </Algorithm>
+    <Algorithm Comment="Reset the circuit breaker" Name="RESET">
+      <Other Language="AnyText" Text=""/>
+    </Algorithm>
+  </BasicFB>
+</FBType>

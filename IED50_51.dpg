@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE FBDiag SYSTEM "DiagnosticElement.dtd">
+<FBDiag Name="IED50_51" Comment="Diagnostic information for the IED50_51 Dual-mode Overcurrent Fault protection device ver 1">
+	<DPS>
+		<DP Event="REQ" Port="Icurrent"/>		
+		<DP Event="CNF" Port="trip"/>
+		<DP Event="RESET_OUT"/>
+		<DP Event="CLEAR"/>
+	</DPS>
+	<Diag>
+		<DiagTest>
+		   <Name>gimbal</Name>
+			<Code>boolean status = true;</Code>
+			<Code>double voltage = 0;</Code>
+		</DiagTest>
+	</Diag>
+</FBDiag>
+
+

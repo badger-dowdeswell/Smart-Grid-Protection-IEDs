@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE System SYSTEM "http://www.holobloc.com/xml/LibraryElement.dtd">
+<System Comment="" Name="Smart_Grid_02">
+  <VersionInfo Author="badger" Date="2021-02-16" Version="1.0"/>
+  <Application Comment="" Name="Smart_Grid_02App">
+    <SubAppNetwork>
+      <FB Comment="" Name="trip_multiplexer" Type="trip_multiplexer" x="4352.941176470588" y="1058.8235294117646"/>
+      <FB Comment="" Name="IED50_51" Type="IED50_51" x="2235.2941176470586" y="1764.705882352941">
+        <Parameter Name="Ipickup_current" Value="4.5"/>
+        <Parameter Name="curve_type" Value="2"/>
+        <Parameter Name="time_dial_setting" Value="5"/>
+        <Parameter Name="min_trip_time" Value="5000"/>
+        <Parameter Name="TI" Value="RQ2"/>
+      </FB>
+      <FB Comment="" Name="IED64" Type="IED64" x="2235.2941176470586" y="470.5882352941176">
+        <Parameter Name="pickup_voltage" Value="20"/>
+        <Parameter Name="voltage" Value="0"/>
+        <Parameter Name="trip_delay_time" Value="600"/>
+      </FB>
+      <FB Comment="" Name="VOLTAGE_A_TO_D" Type="VOLTAGE_A_TO_D" x="705.8823529411765" y="941.1764705882352"/>
+      <FB Comment="" Name="CURRENT_A_TO_D" Type="CURRENT_A_TO_D" x="705.8823529411765" y="2117.6470588235293"/>
+      <EventConnections>
+        <Connection Comment="" Destination="trip_multiplexer.TRIP_2" Source="IED50_51.CNF" dx1="111.76470588235293"/>
+        <Connection Comment="" Destination="trip_multiplexer.RESET" Source="IED50_51.RESET_OUT" dx1="352.94117647058823"/>
+        <Connection Comment="" Destination="trip_multiplexer.TRIP_1" Source="IED64.CNF" dx1="423.52941176470586"/>
+        <Connection Comment="" Destination="trip_multiplexer.RESET" Source="IED64.RESET_OUT" dx1="335.2941176470588"/>
+        <Connection Comment="" Destination="IED64.REQ" Source="VOLTAGE_A_TO_D.CNF" dx1="147.05882352941177"/>
+        <Connection Comment="" Destination="IED50_51.REQ" Source="CURRENT_A_TO_D.CNF" dx1="352.94117647058823"/>
+      </EventConnections>
+      <DataConnections>
+        <Connection Comment="" Destination="IED64.voltage" Source="VOLTAGE_A_TO_D.VRMS" dx1="188.23529411764704"/>
+        <Connection Comment="" Destination="IED50_51.Icurrent" Source="CURRENT_A_TO_D.Icurrent" dx1="352.94117647058823"/>
+      </DataConnections>
+    </SubAppNetwork>
+  </Application>
+  <Device Comment="" Name="FORTE_PC_1" Type="FORTE_PC" x="2758.8235294117644" y="1005.8823529411764">
+    <Parameter Name="MGR_ID" Value="&quot;localhost:61499&quot;"/>
+    <Attribute Comment="device profile" Name="Profile" Type="STRING" Value="HOLOBLOC"/>
+    <Attribute Comment="color" Name="Color" Type="STRING" Value="162,217,51"/>
+    <Resource Comment="" Name="SMART_GRID" Type="EMB_RES" x="0.0" y="0.0">
+      <FBNetwork>
+        <FB Comment="" Name="trip_multiplexer" Type="trip_multiplexer" x="4588.235294117647" y="1176.4705882352941"/>
+        <FB Comment="" Name="IED50_51" Type="IED50_51" x="2588.235294117647" y="1764.705882352941">
+          <Parameter Name="Ipickup_current" Value="4.5"/>
+          <Parameter Name="curve_type" Value="2"/>
+          <Parameter Name="time_dial_setting" Value="5"/>
+          <Parameter Name="min_trip_time" Value="5000"/>
+          <Parameter Name="TI" Value="RQ2"/>
+        </FB>
+        <FB Comment="" Name="IED64" Type="IED64" x="2588.235294117647" y="588.2352941176471">
+          <Parameter Name="pickup_voltage" Value="20"/>
+          <Parameter Name="voltage" Value="0"/>
+          <Parameter Name="trip_delay_time" Value="600"/>
+        </FB>
+        <FB Comment="" Name="VOLTAGE_A_TO_D" Type="VOLTAGE_A_TO_D" x="1294.1176470588234" y="588.2352941176471"/>
+        <FB Comment="" Name="CURRENT_A_TO_D" Type="CURRENT_A_TO_D" x="1176.4705882352941" y="2117.6470588235293"/>
+        <EventConnections>
+          <Connection Comment="" Destination="trip_multiplexer.INIT" Source="START.COLD" dx1="3747.0588235294117"/>
+          <Connection Comment="" Destination="trip_multiplexer.INIT" Source="START.WARM" dx1="3623.5294117647054"/>
+          <Connection Comment="" Destination="trip_multiplexer.TRIP_2" Source="IED50_51.CNF" dx1="205.88235294117646"/>
+          <Connection Comment="" Destination="trip_multiplexer.RESET" Source="IED50_51.RESET_OUT" dx1="317.6470588235294"/>
+          <Connection Comment="" Destination="trip_multiplexer.TRIP_1" Source="IED64.CNF" dx1="488.235294117647"/>
+          <Connection Comment="" Destination="trip_multiplexer.RESET" Source="IED64.RESET_OUT" dx1="488.235294117647"/>
+          <Connection Comment="" Destination="IED64.INIT" Source="START.COLD" dx1="1611.764705882353"/>
+          <Connection Comment="" Destination="IED64.INIT" Source="START.WARM" dx1="1735.2941176470588"/>
+          <Connection Comment="" Destination="IED50_51.INIT" Source="START.COLD" dx1="247.05882352941174"/>
+          <Connection Comment="" Destination="IED50_51.INIT" Source="START.WARM" dx1="358.8235294117647"/>
+          <Connection Comment="" Destination="IED64.REQ" Source="VOLTAGE_A_TO_D.CNF"/>
+          <Connection Comment="" Destination="IED50_51.REQ" Source="CURRENT_A_TO_D.CNF" dx1="205.88235294117646"/>
+          <Connection Comment="" Destination="VOLTAGE_A_TO_D.INIT" Source="START.COLD" dx1="317.6470588235294"/>
+          <Connection Comment="" Destination="CURRENT_A_TO_D.INIT" Source="START.COLD" dx1="141.17647058823528"/>
+          <Connection Comment="" Destination="CURRENT_A_TO_D.INIT" Source="START.WARM" dx1="70.58823529411764"/>
+        </EventConnections>
+        <DataConnections>
+          <Connection Comment="" Destination="IED64.voltage" Source="VOLTAGE_A_TO_D.VRMS" dx1="364.70588235294116"/>
+          <Connection Comment="" Destination="IED50_51.Icurrent" Source="CURRENT_A_TO_D.Icurrent" dx1="217.6470588235294"/>
+        </DataConnections>
+      </FBNetwork>
+    </Resource>
+  </Device>
+  <Mapping From="Smart_Grid_02App.trip_multiplexer" To="FORTE_PC_1.SMART_GRID.trip_multiplexer"/>
+  <Mapping From="Smart_Grid_02App.IED50_51" To="FORTE_PC_1.SMART_GRID.IED50_51"/>
+  <Mapping From="Smart_Grid_02App.IED64" To="FORTE_PC_1.SMART_GRID.IED64"/>
+  <Mapping From="Smart_Grid_02App.VOLTAGE_A_TO_D" To="FORTE_PC_1.SMART_GRID.VOLTAGE_A_TO_D"/>
+  <Mapping From="Smart_Grid_02App.CURRENT_A_TO_D" To="FORTE_PC_1.SMART_GRID.CURRENT_A_TO_D"/>
+  <Segment Comment="" Name="Ethernet" Type="Ethernet" dx1="1764.705882352941" x="3817.6470588235293" y="764.7058823529411">
+    <Attribute Comment="color" Name="Color" Type="STRING" Value="79,122,193"/>
+  </Segment>
+  <Link CommResource="FORTE_PC_1" Comment="" SegmentName="Ethernet"/>
+</System>

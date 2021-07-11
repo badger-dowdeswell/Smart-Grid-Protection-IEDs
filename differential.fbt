@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE FBType SYSTEM "http://www.holobloc.com/xml/LibraryElement.dtd">
+<FBType Comment="Restrained differential protection device" Name="differential">
+  <Identification ApplicationDomain="AUT EMSOFT" Standard="IEC 61499"/>
+  <VersionInfo Author="Badger" Date="2021-03-23" Organization="AUT EMSOFT" Version="1.0"/>
+  <InterfaceList>
+    <EventInputs>
+      <Event Comment="Initialization Request" Name="INIT" Type="Event">
+        <With Var="differential_percentage"/>
+        <With Var="poll_time"/>
+      </Event>
+      <Event Comment="Normal Execution Request" Name="REQ" Type="Event">
+        <With Var="Icurrent_1"/>
+        <With Var="Icurrent_2"/>
+      </Event>
+      <Event Comment="" Name="RESET" Type="Event"/>
+      <Event Comment="" Name="POLL" Type="Event"/>
+    </EventInputs>
+    <EventOutputs>
+      <Event Comment="Initialization Confirm" Name="INITO" Type="Event"/>
+      <Event Comment="Execution Confirmation" Name="CNF" Type="Event">
+        <With Var="trip"/>
+      </Event>
+      <Event Comment="Start the poll cycle for the differential current sampling" Name="START_POLL" Type="Event">
+        <With Var="poll_time_set"/>
+      </Event>
+      <Event Comment="Stop" Name="STOP_POLL" Type="Event"/>
+      <Event Comment="" Name="RESET_OUT" Type="Event"/>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration Comment="Polling time for sampling the current differential in ms." Name="poll_time" Type="TIME"/>
+      <VarDeclaration Comment="Input event qualifier" Name="differential_percentage" Type="REAL"/>
+      <VarDeclaration Comment="Measured current one" Name="Icurrent_1" Type="REAL"/>
+      <VarDeclaration Comment="Measured current 2" Name="Icurrent_2" Type="REAL"/>
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration Comment="Output event qualifier" Name="poll_time_set" Type="TIME"/>
+      <VarDeclaration Comment="" Name="trip" Type="BOOL"/>
+    </OutputVars>
+  </InterfaceList>
+  <BasicFB>
+    <ECC>
+      <ECState Comment="Initial State" Name="NORMAL" x="441.17647058823525" y="1458.8235294117646"/>
+      <ECState Comment="Initialization" Name="Init" x="588.2352941176471" y="541.1764705882352">
+        <ECAction Algorithm="initialize" Output="INITO"/>
+        <ECAction Algorithm="START_TIMER" Output="START_POLL"/>
+      </ECState>
+      <ECState Comment="" Name="REQ" x="1735.2941176470588" y="1111.764705882353">
+        <ECAction Algorithm="REQ"/>
+      </ECState>
+      <ECState Comment="" Name="POLL" x="1694.1176470588234" y="1558.8235294117646">
+        <ECAction Algorithm="POLL"/>
+      </ECState>
+      <ECState Comment="" Name="TRIP" x="2147.0588235294117" y="2305.882352941176">
+        <ECAction Algorithm="TRIP" Output="CNF"/>
+      </ECState>
+      <ECState Comment="" Name="RESET" x="464.70588235294116" y="2217.6470588235293">
+        <ECAction Algorithm="RESET" Output="RESET_OUT"/>
+      </ECState>
+      <ECTransition Comment="Initialise" Condition="INIT" Destination="Init" Source="NORMAL" x="482.35294117647055" y="1035.2941176470588"/>
+      <ECTransition Comment="" Condition="1" Destination="NORMAL" Source="Init" x="847.0588235294117" y="1047.0588235294117"/>
+      <ECTransition Comment="" Condition="REQ" Destination="REQ" Source="NORMAL" x="1158.8235294117646" y="1176.4705882352941"/>
+      <ECTransition Comment="" Condition="1" Destination="NORMAL" Source="REQ" x="1176.4705882352941" y="1370.5882352941176"/>
+      <ECTransition Comment="" Condition="POLL" Destination="POLL" Source="NORMAL" x="1258.8235294117646" y="1582.3529411764705"/>
+      <ECTransition Comment="" Condition="[differential(differential_percentage , Icurrent_1, Icurrent_2) = = TRUE]" Destination="TRIP" Source="POLL" x="2700.0" y="1964.705882352941"/>
+      <ECTransition Comment="" Condition="RESET" Destination="RESET" Source="TRIP" x="1429.4117647058822" y="2582.3529411764703"/>
+      <ECTransition Comment="" Condition="1" Destination="NORMAL" Source="RESET" x="605.8823529411765" y="1847.0588235294117"/>
+      <ECTransition Comment="" Condition="1" Destination="NORMAL" Source="POLL" x="1258.8235294117646" y="1747.0588235294117"/>
+    </ECC>
+    <Algorithm Comment="Initialization algorithm" Name="initialize">
+      <Other Language="AnyText" Text="&#9;cout &lt;&lt; &quot;alg_initialise\n&quot;;"/>
+    </Algorithm>
+    <Algorithm Comment="new algorithm" Name="START_TIMER">
+      <Other Language="AnyText" Text="&#9;cout &lt;&lt; &quot;algSTART_TIMER\n&quot;;"/>
+    </Algorithm>
+    <Algorithm Comment="new algorithm" Name="REQ">
+      <Other Language="AnyText" Text="&#9;cout &lt;&lt; &quot;algREQ\n&quot;;"/>
+    </Algorithm>
+    <Algorithm Comment="new algorithm" Name="POLL">
+      <Other Language="AnyText" Text="&#9;cout &lt;&lt; &quot;algPOLL\n&quot;;"/>
+    </Algorithm>
+    <Algorithm Comment="new algorithm" Name="RESET">
+      <Other Language="AnyText" Text=""/>
+    </Algorithm>
+    <Algorithm Comment="new algorithm" Name="TRIP">
+      <Other Language="AnyText" Text=""/>
+    </Algorithm>
+    <Algorithm Comment="calculates the differential between the currents" Name="differential">
+      <Other Language="AnyText" Text="&#9;cout &lt;&lt; &quot;algdifferential&quot;;"/>
+    </Algorithm>
+  </BasicFB>
+</FBType>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE FBDiag SYSTEM "DiagnosticElement.dtd">
+<FBDiag Name="IED64" Comment="Diagnostic information for IED64 Earth Fault protection device ver 1">
+	<DPS>
+		<DP Name="voltage"/>		
+		<DP Name="CNF"/>
+		<DP Name="RESET_OUT"/>
+	</DPS>
+	<Diag>
+		<DiagTest>
+		   <Name>gimbal</Name>
+			<Code>boolean status = true;</Code>
+			<Code>double voltage = 0;</Code>
+		</DiagTest>
+	</Diag>
+</FBDiag>
+
+

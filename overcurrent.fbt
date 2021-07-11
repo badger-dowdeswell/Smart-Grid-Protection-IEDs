@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE FBType SYSTEM "http://www.holobloc.com/xml/LibraryElement.dtd">
+<FBType Comment="Template for a simple Basic Function Block Type" Name="overcurrent">
+  <Identification Standard="61499-2"/>
+  <VersionInfo Author="badger" Date="2021-02-27" Version="1.0"/>
+  <InterfaceList>
+    <EventInputs>
+      <Event Comment="Initialization Request" Name="INIT" Type="Event">
+        <With Var="Ipickup_current"/>
+        <With Var="curve_type"/>
+        <With Var="time_dial_setting"/>
+        <With Var="min_trip_time"/>
+      </Event>
+      <Event Comment="Normal Execution Request" Name="REQ" Type="Event">
+        <With Var="current"/>
+      </Event>
+      <Event Comment="" Name="RESET" Type="Event"/>
+      <Event Comment="" Name="TIME_UP" Type="Event"/>
+      <Event Comment="" Name="CLEAR" Type="Event"/>
+    </EventInputs>
+    <EventOutputs>
+      <Event Comment="Initialization Confirm" Name="INITO" Type="Event"/>
+      <Event Comment="Execution Confirmation" Name="CNF" Type="Event">
+        <With Var="trip"/>
+      </Event>
+      <Event Comment="" Name="START_TIMER" Type="Event">
+        <With Var="trip_time"/>
+      </Event>
+      <Event Comment="" Name="RESET_OUT" Type="Event"/>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration Comment="Input event qualifier" Name="Ipickup_current" Type="REAL"/>
+      <VarDeclaration Comment="" Name="current" Type="REAL"/>
+      <VarDeclaration Comment="" Name="curve_type" Type="INT"/>
+      <VarDeclaration Comment="" Name="time_dial_setting" Type="REAL"/>
+      <VarDeclaration Comment="" Name="min_trip_time" Type="TIME"/>
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration Comment="Output event qualifier" Name="trip" Type="BOOL"/>
+      <VarDeclaration Comment="" Name="trip_time" Type="TIME"/>
+    </OutputVars>
+  </InterfaceList>
+  <BasicFB>
+    <ECC>
+      <ECState Comment="Initial State" Name="NORMAL" x="547.0588235294117" y="1158.8235294117646"/>
+      <ECState Comment="Initialization" Name="INIT" x="623.5294117647059" y="605.8823529411765">
+        <ECAction Algorithm="START_TIMER" Output="INITO"/>
+      </ECState>
+      <ECState Comment="" Name="FAULT" x="1623.5294117647059" y="1394.1176470588234"/>
+      <ECState Comment="" Name="START_TIMER" x="2700.0" y="1388.235294117647">
+        <ECAction Algorithm="START_TIMER" Output="START_TIMER"/>
+      </ECState>
+      <ECState Comment="" Name="TRIP" x="2747.0588235294117" y="2147.0588235294117">
+        <ECAction Algorithm="TRIP" Output="CNF"/>
+      </ECState>
+      <ECState Comment="" Name="RESET" x="629.4117647058823" y="2152.9411764705883">
+        <ECAction Algorithm="RESET" Output="RESET_OUT"/>
+      </ECState>
+      <ECTransition Comment="" Condition="INIT" Destination="INIT" Source="NORMAL" x="552.9411764705882" y="947.0588235294117"/>
+      <ECTransition Comment="Return after initialisation" Condition="1" Destination="NORMAL" Source="INIT" x="958.8235294117646" y="911.7647058823529"/>
+      <ECTransition Comment="Starts the timer when an overcurrent fault is detected" Condition="REQ[(current() &gt; Ipickup_current())]" Destination="FAULT" Source="NORMAL" x="2076.470588235294" y="911.7647058823529"/>
+      <ECTransition Comment="Start the time on a fault condition only if it has not already been started." Condition="[NOT fault()]" Destination="START_TIMER" Source="FAULT" x="2482.3529411764703" y="1211.764705882353"/>
+      <ECTransition Comment="" Condition="1" Destination="FAULT" Source="START_TIMER" x="2423.529411764706" y="1541.1764705882351"/>
+      <ECTransition Comment="Timer has expired during a fault, signaling that the fault is real." Condition="TIME_UP" Destination="TRIP" Source="FAULT" x="2729.411764705882" y="1799.9999999999998"/>
+      <ECTransition Comment="Clear the fault condition if the current returns to a safe level." Condition="REQ[(current() &lt; Ipickup_current())]" Destination="RESET" Source="FAULT" x="1517.6470588235293" y="1788.2352941176468"/>
+      <ECTransition Comment="" Condition="1" Destination="NORMAL" Source="RESET" x="364.70588235294116" y="1752.941176470588"/>
+      <ECTransition Comment="Stop the time and reset if the fault condition has been cleared." Condition="CLEAR" Destination="RESET" Source="TRIP" x="1711.764705882353" y="2564.705882352941"/>
+    </ECC>
+    <Algorithm Comment="Initialisation" Name="INIT">
+      <Other Language="AnyText" Text="fault() = false;"/>
+    </Algorithm>
+    <Algorithm Comment="Start timer" Name="START_TIMER">
+      <Other Language="AnyText" Text="&#9;fault() = true;&#10;&#9;trip_time() = min_trip_time()"/>
+    </Algorithm>
+    <Algorithm Comment="Reset to clear the fault condition" Name="RESET">
+      <Other Language="AnyText" Text="&#9;fault() = false;"/>
+    </Algorithm>
+    <Algorithm Comment="Trip the circuit breaker" Name="TRIP">
+      <Other Language="AnyText" Text=""/>
+    </Algorithm>
+  </BasicFB>
+</FBType>

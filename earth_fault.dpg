@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE FBDiag SYSTEM "DiagnosticElement.dtd">
+<FBDiag Name="earth_fault" Comment="Diagnostic information for earth_fault ver 1">
+	<DPS>
+		<DP Name="voltage"/>		
+		<DP Name="RESET_OUT"/>
+	</DPS>
+	<Diag>
+		<DiagTest>
+		   <Name>gimbal</Name>
+			<Code>boolean status = true;</Code>
+			<Code>double voltage = 0;</Code>
+		</DiagTest>
+	</Diag>
+</FBDiag>
+
+

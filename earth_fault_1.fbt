@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE FBType SYSTEM "http://www.holobloc.com/xml/LibraryElement.dtd">
+<FBType Comment="Composite Function Block Type" Name="earth_fault_1">
+  <Identification Standard="61499-2"/>
+  <VersionInfo Author="gulzha" Date="3/23/2016" Organization="nxtControl GmbH" Remarks="template" Version="0.0"/>
+  <InterfaceList>
+    <EventInputs>
+      <Event Comment="Initialization Request" Name="INIT" Type="Event">
+        <With Var="pickup_voltage"/>
+        <With Var="voltage"/>
+        <With Var="DT1"/>
+        <With Var="DT2"/>
+      </Event>
+      <Event Comment="Normal Execution Request" Name="REQ" Type="Event">
+        <With Var="pickup_voltage"/>
+        <With Var="voltage"/>
+      </Event>
+      <Event Comment="" Name="RESET" Type="Event"/>
+      <Event Comment="" Name="CLEAR" Type="Event"/>
+    </EventInputs>
+    <EventOutputs>
+      <Event Comment="Initialization Confirm" Name="INITO" Type="Event">
+        <With Var="trip"/>
+      </Event>
+      <Event Comment="Execution Confirmation" Name="CNF" Type="Event">
+        <With Var="trip"/>
+      </Event>
+      <Event Comment="" Name="RESET_OUT" Type="Event">
+        <With Var="trip"/>
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration Comment="" Name="voltage" Type="REAL"/>
+      <VarDeclaration Comment="" Name="pickup_voltage" Type="INT"/>
+      <VarDeclaration Comment="Delay Time" Name="DT2" Type="TIME"/>
+      <VarDeclaration Comment="Delay Time" Name="DT1" Type="TIME"/>
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration Comment="" Name="trip" Type="BOOL"/>
+    </OutputVars>
+  </InterfaceList>
+  <FBNetwork>
+    <FB Comment="" Name="TRIP_TIMER" Type="E_DELAY" x="3535.2941176470586" y="694.1176470588235"/>
+    <FB Comment="" Name="RESET_TIMER" Type="E_DELAY" x="3541.176470588235" y="1988.2352941176468"/>
+    <FB Comment="" Name="FB1" Type="earth_fault" x="1947.0588235294117" y="1117.6470588235293"/>
+    <EventConnections>
+      <Connection Comment="" Destination="FB1.INIT" Source="INIT" dx1="899.9999999999999"/>
+      <Connection Comment="" Destination="FB1.REQ" Source="REQ" dx1="823.5294117647059"/>
+      <Connection Comment="" Destination="FB1.RESET" Source="RESET" dx1="717.6470588235294"/>
+      <Connection Comment="" Destination="FB1.TIME_UP" Source="TRIP_TIMER.EO" dx1="70.58823529411764" dx2="211.76470588235293" dy="-229.41176470588235"/>
+      <Connection Comment="" Destination="FB1.CLEAR" Source="CLEAR" dx1="605.8823529411765"/>
+      <Connection Comment="" Destination="INITO" Source="FB1.INITO" dx1="1182.3529411764705"/>
+      <Connection Comment="" Destination="CNF" Source="FB1.CNF" dx1="1182.3529411764705"/>
+      <Connection Comment="" Destination="TRIP_TIMER.START" Source="FB1.START_TIMER" dx1="88.23529411764706"/>
+      <Connection Comment="" Destination="TRIP_TIMER.STOP" Source="FB1.RESET_OUT" dx1="129.41176470588235"/>
+      <Connection Comment="" Destination="RESET_TIMER.STOP" Source="FB1.RESET_OUT" dx1="458.8235294117647"/>
+      <Connection Comment="" Destination="RESET_OUT" Source="FB1.RESET_OUT" dx1="1182.3529411764705"/>
+    </EventConnections>
+    <DataConnections>
+      <Connection Comment="" Destination="TRIP_TIMER.DT" Source="DT1" dx1="2752.941176470588"/>
+      <Connection Comment="" Destination="RESET_TIMER.DT" Source="DT2" dx1="370.5882352941176"/>
+      <Connection Comment="" Destination="FB1.pickup_voltage" Source="pickup_voltage" dx1="470.5882352941176"/>
+      <Connection Comment="" Destination="FB1.voltage" Source="voltage" dx1="217.6470588235294"/>
+      <Connection Comment="" Destination="trip" Source="FB1.trip" dx1="1958.8235294117646"/>
+    </DataConnections>
+  </FBNetwork>
+</FBType>

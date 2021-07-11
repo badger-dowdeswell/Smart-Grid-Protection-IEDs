@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE FBDiag SYSTEM "DiagnosticElement.dtd">
+<FBDiag Name="trip_multiplexer" Comment="Diagnostic information for trip_multiplexer ver 1">
+	<DPS>
+		<DP Name="CB_TRIP"/>
+		<DP Name="CB_RESET"/>
+	</DPS>
+	<Diag>
+		<DiagTest>
+		   <Name>gimbal</Name>
+			<Code>boolean status = true;</Code>
+			<Code>double voltage = 0;</Code>
+		</DiagTest>
+	</Diag>
+</FBDiag>
+
+

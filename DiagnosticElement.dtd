@@ -1,0 +1,32 @@
+<?xml encoding="UTF-8"?>
+
+<!ELEMENT FBDiag (DPS,Diag)>
+<!ATTLIST FBDiag
+  xmlns CDATA #FIXED ''
+  Comment CDATA #REQUIRED
+  Name NMTOKEN #REQUIRED>
+
+<!ELEMENT DPS (DP)+>
+<!ATTLIST DPS
+  xmlns CDATA #FIXED ''>
+
+<!ELEMENT Diag (DiagTest)>
+<!ATTLIST Diag
+  xmlns CDATA #FIXED ''>
+
+<!ELEMENT DP EMPTY>
+<!ATTLIST DP
+  xmlns CDATA #FIXED ''
+  Name NMTOKEN #REQUIRED>
+
+<!ELEMENT DiagTest (Name,Code+)>
+<!ATTLIST DiagTest
+  xmlns CDATA #FIXED ''>
+
+<!ELEMENT Name (#PCDATA)>
+<!ATTLIST Name
+  xmlns CDATA #FIXED ''>
+
+<!ELEMENT Code (#PCDATA)>
+<!ATTLIST Code
+  xmlns CDATA #FIXED ''>
